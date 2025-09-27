@@ -1,93 +1,98 @@
 # ARC-AGI Challenge Solution
 
-This repository contains a machine learning solution for the **ARC-AGI (Abstraction and Reasoning Corpus for Artificial General Intelligence)** challenge, which tests AI systems' ability to perform abstract reasoning on visual grid-based puzzles.
+A complete machine learning solution for the **ARC-AGI (Abstraction and Reasoning Corpus for Artificial General Intelligence)** challenge using fine-tuned language models with LoRA (Low-Rank Adaptation).
 
 ## Overview
 
-The ARC-AGI challenge consists of visual reasoning tasks where AI models must:
-- Analyze input-output transformation patterns from training examples
-- Apply learned abstract rules to solve new test cases
-- Demonstrate human-like reasoning capabilities on novel problems
+The ARC-AGI challenge tests AI systems on abstract visual reasoning tasks. This project demonstrates:
 
-This project implements a test-time fine-tuning approach using **Llama 3.2 1B** model with LoRA (Low-Rank Adaptation) to solve ARC-AGI tasks efficiently.
+- **Pattern Recognition**: Analyzing grid-based input-output transformations
+- **Abstract Reasoning**: Learning rules from few examples
+- **Visual Intelligence**: Understanding spatial relationships and colors
+- **Efficient Fine-tuning**: Parameter-efficient adaptation with LoRA
 
-## 📁 Project Structure
+
+## Project Structure
 
 ```
 arc-agi/
 ├── README.md                           # Project documentation
-├── dataloader.py                      # Data loading utilities
-├── plot.py                            # Visualization tools
-├── arc-agi.ipynb                      # Main experiment notebook
-├── arc-prize-2025/                    # ARC-AGI dataset files
+├── dataloader.py                       # ARC dataset loading and preprocessing
+├── helper.py                           # Utility functions
+├── plot.py                            # Grid visualization tools
+├── train.ipynb                        # Main fine-tuning notebook
+├── result.ipynb                       # Model evaluation and results
+├── pyproject.toml                     # Dependencies management
+├── uv.lock                            # Dependency lock file
+├── arc-prize-2025/                    # Official ARC-AGI dataset
 │   ├── arc-agi_training_challenges.json
 │   ├── arc-agi_training_solutions.json
 │   ├── arc-agi_evaluation_challenges.json
 │   ├── arc-agi_evaluation_solutions.json
-│   ├── arc-agi_test_challenges.json
-│   └── sample_submission.json
-├── test-time-train/                   # Test-time training experiments
-│   ├── README.md
-│   ├── trelis-ttt.ipynb              # Current TTT implementation
-│   └── archive/
-│       └── trelis-ttt-20.ipynb       # Previous experiment versions
-├── kaggle/                            # Kaggle-specific utilities
-└── pyproject.toml                     # Project dependencies
+│   └── arc-agi_test_challenges.json
+├── model/                             # Saved fine-tuned models
+└── .venv/                            # Virtual environment
 ```
 
 ## Key Features
 
-### 1. **Test-Time Fine-Tuning (TTT)**
-- Dynamic model adaptation during inference
-- Uses Unsloth framework for efficient LoRA fine-tuning
-- Optimized for GPU memory usage and training speed
+### **Efficient Fine-tuning**
+- **LoRA (Low-Rank Adaptation)**: Train only 0.65% of model parameters
+- **Memory Efficient**: Works on both CPU and GPU
+- **Fast Training**: Quick adaptation to ARC tasks
 
-### 2. **Advanced Inference Strategies**
-- **Standard Generation**: Direct model output
-- **Depth-First Search (DFS)**: Multiple candidate generation with best-first selection
-- **Batch Processing**: Efficient parallel inference
+### **Data Augmentation**
+- **Color Swapping**: Generalize across different color schemes
+- **Grid Transformations**: Rotations, mirrors, shuffling
+- **Pattern Variations**: Multiple perspectives of the same task
 
-### 3. **Data Augmentation**
-- Color swapping for pattern generalization
-- Grid rotations and reflections
-- Training example shuffling
+### **Comprehensive Evaluation**
+- **Visual Comparison**: Side-by-side input/output/prediction plots
+- **Accuracy Metrics**: Pixel-level and grid-level accuracy
+- **Error Analysis**: Detailed visualization of prediction differences
 
-### 4. **Visualization Tools**
-- Grid pattern visualization
-- Training/test example plotting
-- Performance analysis charts
+### **Modular Design**
+- Clean separation of data loading, training, and evaluation
+- Reusable components for different model architectures
+- Easy experimentation with different hyperparameters
 
-## Installation
+## Quick Start
 
 ### Prerequisites
 - Python 3.12+
-- CUDA-compatible GPU (recommended)
-- UV package manager
+- UV package manager (recommended) or pip
+- 4GB+ RAM (8GB+ recommended)
+- Optional: CUDA-compatible GPU for faster training
 
-### Setup
+### Installation
+
 ```bash
 # Clone the repository
 git clone https://github.com/Allenwang2004/arc-agi.git
 cd arc-agi
 
-# Install dependencies using UV
+# Install dependencies with UV (recommended)
 uv sync
 
 # Activate virtual environment
-source .venv/bin/activate  # On macOS/Linux
+source .venv/bin/activate  # macOS/Linux
 # or
-.venv\Scripts\activate     # On Windows
+.venv\Scripts\activate     # Windows
 ```
 
-### Additional Requirements
-```bash
-# Install Unsloth for efficient fine-tuning
-uv pip install unsloth
+### Running the Experiments
 
-# Optional: Install Flash Attention for faster training
-uv pip install flash-attn --no-build-isolation
-```
+1. **Training**: Open and run `train.ipynb`
+   - Loads ARC training data
+   - Fine-tunes GPT-2 with LoRA
+   - Saves the trained model
+
+2. **Evaluation**: Open and run `result.ipynb`
+   - Loads fine-tuned model
+   - Tests on evaluation dataset
+   - Generates visual comparisons
+
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is open source and available under the [MIT License](LICENSE).
